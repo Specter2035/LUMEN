@@ -8,7 +8,7 @@ from adaptadores.normalize import normalize_events
 
 def load_events(path: str):
     """
-    Automatically detects file type and returns canonical DataFrame.
+    Automáticamente detecta el tipo de archivo y devuelve un DataFrame canónico.    
     """
 
     extension = os.path.splitext(path)[1].lower()

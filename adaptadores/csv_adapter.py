@@ -5,8 +5,8 @@ import pandas as pd
 
 def read_csv_export(path: str) -> pd.DataFrame:
     """
-    Reads a Moodle CSV export and returns a raw DataFrame.
-    No cleaning or normalization is performed here.
+    Leer una exportación CSV de Moodle y devolver un DataFrame sin procesar.
+    No se realiza ninguna limpieza o normalización aquí.    
     """
 
     try:

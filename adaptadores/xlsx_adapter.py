@@ -5,8 +5,8 @@ import pandas as pd
 
 def read_xlsx_export(path: str) -> pd.DataFrame:
     """
-    Reads a Moodle XLSX export and returns a raw DataFrame.
-    Assumes data is in the first sheet.
+    Lee un exportación XLSX de Moodle y devuelve un DataFrame sin procesar.
+    Asume que los datos están en la primera hoja.
     """
 
     df = pd.read_excel(path)

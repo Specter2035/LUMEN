@@ -1,6 +1,6 @@
 from adaptadores.load import load_events
 
-path = "datos/exports/logs_KX7A_20260220-1943_GrupoB.csv"
+path = "datos/exports/logs_KX7A_20260220-1944_GrupoB.json"
 
 df = load_events(path)
 

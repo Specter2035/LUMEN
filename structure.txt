@@ -2,6 +2,7 @@
 ├── adaptadores
 │   ├── __pycache__
 │   │   ├── csv_adapter.cpython-312.pyc
+│   │   ├── json_adapter.cpython-312.pyc
 │   │   ├── load.cpython-312.pyc
 │   │   ├── normalize.cpython-312.pyc
 │   │   └── xlsx_adapter.cpython-312.pyc
@@ -21,4 +22,4 @@
 ├── structure.txt
 └── test_pipeline.py
 
-6 directories, 15 files
+6 directories, 16 files

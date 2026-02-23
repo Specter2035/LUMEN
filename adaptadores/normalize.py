@@ -17,37 +17,47 @@ RAW_TO_STD = {
     "Dirección IP": "ip_address",
 }
 
+STD_COLUMNS = list(RAW_TO_STD.values())
 
-def normalize_events(df: pd.DataFrame, source_file: str, source_format: str) -> pd.DataFrame:
+
+def normalize_events(
+    df: pd.DataFrame, source_file: str, source_format: str
+) -> pd.DataFrame:
     """
-    Transforms raw Moodle log DataFrame into canonical schema.
+    Transforma logs de DataFrames de moodle a un esquema canónico
     """
 
-    # Rename columns
+    df = df.copy()
+    # 0) Normalizar strings de encabezado (para prevenir discrepancias por espacios)
+    df.columns = [str(c).strip() for c in df.columns]
+
+    # 1) Renombrar columnas
     df = df.rename(columns=RAW_TO_STD)
 
-    # Keep only canonical columns
-    df = df[list(RAW_TO_STD.values())]
+    # 2) Asegurar que columnas canónicas existen (prevenir errores de tipo KeyError si el método renombre no coincide)
+    for col in STD_COLUMNS:
+        if col not in df.columns:
+            df[col] = pd.NA
 
-    # Convert event_time to datetime
+    # 3) Mantener solo columnas canónicas (ordenadas)
+    df = df[STD_COLUMNS]
+
+    # 4) Convertir event_time a datetime
     df["event_time"] = pd.to_datetime(
-    df["event_time"],
-    format="%Y-%m-%d %H:%M:%S",
-    errors="coerce"
+        df["event_time"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
     )
 
-    # Replace "-" with None
+    # 5) Reemplazar "-" con None
     df["affected_user_name"] = df["affected_user_name"].replace("-", None)
 
-    # Add metadata
+    # 6) Añadir metadatos
     df["source_file"] = source_file
     df["source_format"] = source_format
     df["ingested_at"] = datetime.utcnow()
 
-    # Create row hash for deduplication
+    # 7) Crear fila hash para deduplicación
     df["row_hash"] = df.apply(
-        lambda row: hashlib.md5(str(row.values).encode()).hexdigest(),
-        axis=1
+        lambda row: hashlib.md5(str(row.values).encode()).hexdigest(), axis=1
     )
 
     return df

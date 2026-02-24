@@ -25,9 +25,6 @@ def load_events(path: str):
 
     elif extension == ".json":
         raw_df = read_json_export(path)
-        print("RAW JSON shape:", raw_df.shape)
-        print("RAW JSON columns:", list(raw_df.columns))
-        print("RAW JSON head:\n", raw_df.head(3))
         format_type = "json"
 
     else:

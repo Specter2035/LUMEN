@@ -44,8 +44,13 @@ def normalize_events(
 
     # 4) Convertir event_time a datetime
     df["event_time"] = pd.to_datetime(
-        df["event_time"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
+        df["event_time"],
+        format="%d/%m/%y, %H:%M:%S",
+        errors="coerce",
     )
+
+    if df["event_time"].isna().any():
+        raise ValueError("Datetime parsing failed: event_time contains NaT values.")
 
     # 5) Reemplazar "-" con None
     df["affected_user_name"] = df["affected_user_name"].replace("-", None)
